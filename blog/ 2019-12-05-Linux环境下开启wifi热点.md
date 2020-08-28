@@ -2,10 +2,9 @@
 id: Linux环境下开启wifi热点
 title: Linux环境下开启wifi热点
 author: 一代风流～
-author_title: Docusaurus Core Team
+author_title: To be the weirdest person
 author_url: https://blog.csdn.net/qq_43176366
-author_image_url: https://avatars1.githubusercontent.com/u/2055384?v=4
-tags: [hola, docusaurus]
+author_image_url: /img/cx-head.jpg
 ---
 
 起因
@@ -15,6 +14,7 @@ tags: [hola, docusaurus]
 　　所以我想到的办法是用一台设备连接wifi后分享出去，即wifi热点。
 
 　　在Windows下是可以直接用的，但是在linux环境下貌似不能，我的系统是Deepin 15.11 有一个热点，但是连接后会断开ＷｉＦｉ连接，貌似这个的场景是连接网线后开热点。
+<!--truncate-->
 
 # 方法
 
@@ -62,5 +62,7 @@ cat /proc/net/dev | awk '{if($2>0 && NR > 2) print substr($1, 0, index($1, ":") 
 ### 之后就可以都所有设备都上网了。
 
 ### 如何卸载
-
+```bash
 make uninstall
+```
+
