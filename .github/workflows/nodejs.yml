@@ -24,6 +24,6 @@ jobs:
           ftp-server: ftp://www.haohanxingchen.cn/www/wwwroot/www.haohanxingchen.cn
           ftp-username: ${{ secrets.ftp_user }}
           ftp-password: ${{ secrets.ftp_pwd }}
-          local-dir: build/
+          local-dir: build
         env:
           CI: true
