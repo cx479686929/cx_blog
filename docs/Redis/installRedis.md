@@ -1,5 +1,5 @@
 ---
-id: Redis安装
+id: installRedis
 title: Redis安装
 author: 一代风流～
 author_title: To be the weirdest person

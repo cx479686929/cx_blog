@@ -1,0 +1,135 @@
+---
+id: UDPTCP
+title: UDP和TCP
+---
+
+## 1.UDP TCP简介
+
+TCP（Transmission Control Protocol [传输控制协议](https://baike.baidu.com/item/传输控制协议/9727741)）是一种面向连接的、可靠的、基于字节流的[传输层](https://baike.baidu.com/item/传输层/4329536)通信协议。两台计算机可以把数据当做一个双向字节流进行交换。（IP协议是一种网络层协议，规定每个互联网上的计算机只能有一个唯一的ip地址）
+<!--truncate-->
+UDP协议全称是用户数据报协议，在[网络](https://baike.baidu.com/item/网络/143243)中它与[TCP](https://baike.baidu.com/item/TCP)协议一样用于处理数据包，是一种无连接的协议。
+
+两者区别：
+
+ 1.基于连接与无连接，TCP相当于打电话，UDP相当于发短信
+ 2.TCP要求系统资源较多，UDP较少； 
+ 3.UDP程序结构较简单 
+ 4.流模式（TCP）与数据报模式(UDP); 
+ 5.TCP保证数据正确性，UDP可能丢包 
+ 6.TCP保证数据顺序，UDP不保证 
+
+UDP应用场景：
+ 1.面向数据报方式
+ 2.网络数据大多为短消息 
+ 3.拥有大量Client
+ 4.对数据安全性无特殊要求
+ 5.网络负担非常重，但对响应速度要求高
+
+## 2.TCP的连接建立与连接终止（三次握手与四次挥手）
+
+1.TCP三次握手的过程如下：
+
+ 
+
+![img](https://img-blog.csdnimg.cn/20190122104615974.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMTc2MzY2,size_16,color_FFFFFF,t_70)
+
+1. 客户端发送SYN（SEQ=x）报文给服务器端，进入SYN_SEND状态。
+2. 服务器端收到SYN报文，回应一个SYN （SEQ=y）ACK(ACK=x+1）报文，进入[SYN_RECV](https://baike.baidu.com/item/SYN_RECV)状态。
+3. 客户端收到服务器端的SYN报文，回应一个ACK(ACK=y+1）报文，进入Established状态。
+
+三次握手完成，TCP客户端和服务器端成功地建立连接，可以开始传输数据了。
+
+#### 至于为什么要三次握手？？主要是传输的过程中数据可能丢失，需要一个反馈
+
+![img](https://img-blog.csdnimg.cn/20190122105435431.jpg)
+
+或者说我们详细看看三次握手都在确认些什么
+
+| 握手次数 | 客户端知道了什么                                    | 服务端知道了什么                                      |
+| -------- | --------------------------------------------------- | ----------------------------------------------------- |
+| 第一次   |                                                     | 客户端的发送是正常的 服务端的接受是正常的             |
+| 第二次   | 客户端的发送接收是正常的 服务端的发送和接收是正常的 |                                                       |
+| 第三次   |                                                     | 客户端的发送和接收是正常的 服务端的发送和接收是正常的 |
+
+解释一下上表
+
+1.第一次 服务端接收到了消息，那么服务端可以确认客户端的发送没问题，自己的接收也没问题。
+
+2.第二次 客户端接收到了服务端的消息，那么客户端的接收和服务端的发送是没问题的，同时服务端肯定是接收到了之前客户端发送的消息才会发送消息过来，那么可以确认客户端的发送，服务端的接收是没问题的。
+
+3.第三次 同理服务端知道了服务端自己的发送，客户端的发送是没问题的。
+
+由此可以发现握手确认了自己和对方的接收和发送都是正常的
+
+### 那么为什么2次不行？这个问题就很好解释了
+
+第二次过后 服务端并不知道自己的发送和客户端的接收有没有问题。
+
+### 那为什么不是4次、5次、6次握手呢？
+
+从功能上看，次数越多，确认是没问题的，但是如果从性能上看呢？
+
+既然3次已经完成了功能，又何必多次反复确认呢？
+
+2.四次挥手过程如下：
+
+![img](https://img-blog.csdnimg.cn/20190122105701762.jpg)
+
+为什么连接需要三次，断开需要四次了呢？
+
+第一种情况：服务端干完了 
+
+![img](https://img-blog.csdnimg.cn/20190122110755689.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMTc2MzY2,size_16,color_FFFFFF,t_70)
+
+而并不是服务器每次都能干完 都能断开
+
+第二种情况：
+
+![img](https://img-blog.csdnimg.cn/20190122111539128.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMTc2MzY2,size_16,color_FFFFFF,t_70)
+
+客户端频繁地发消息，这样六次会话都没登断开
+
+所以最终有了四次挥手
+
+ 
+
+![img](https://img-blog.csdnimg.cn/20190122112220452.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMTc2MzY2,size_16,color_FFFFFF,t_70)
+
+## 3.通信的代码实现（UDP）
+
+```java
+//客户端
+//准备要发送的信息
+String msg="要发送的消息"；
+//创建套接字对象
+DatagramSocket socket = new DatagramSocket();
+//目标地址：电脑的IP地址
+InetAddress host = InetAddress.getByName("192.168.*.*");
+//指定包要发送的目的地
+byte[]  data=msg.getBytes();
+DatagramPacket request =
+	        new DatagramPacket(data,data.length, host, 9999);//9999为端口 自定义
+ //发送
+socket.send(request);
+ 
+ 
+ 
+ 
+//服务器端
+ 
+//创建套接字对象
+DatagramSocket socket = new DatagramSocket(9999); //9999为端口 自定义
+//创建接受的容器		
+byte[]  data=new byte[10];
+		DatagramPacket request = new DatagramPacket(data, 10);
+		
+//接受消息
+        while(true){
+		socket.receive(request);
+		//处理消息
+		String s=new String(tong);
+		System.out.println("收到消息: "+s);
+		}
+
+
+```

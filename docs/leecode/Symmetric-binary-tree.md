@@ -1,0 +1,40 @@
+---
+id: Symmetric-binary-tree
+title: 对称的二叉树
+author: 一代风流～
+author_title: To be the weirdest person
+author_url: https://blog.csdn.net/qq_43176366
+author_image_url: /img/cx-head.jpg
+
+---
+
+## 对称的二叉树
+
+对于一颗对称二叉树的任意对称结点L和R必然有
+
+- L.val=R.val
+- L.left.val=R.right.val
+- L.right.val=R.left.val
+
+<!--truncate-->
+
+及该左右结点值得相等，并且左节点的左孩子的值和右节点的值相等，同时左节点的右孩子的值和右节点的左孩子的值相等。
+
+#### 根据以上规律，考虑从顶至底递归，判断每对节点是否对称，从而判断树是否为对称二叉树。
+
+```java
+
+class solution{
+  public boolean isSymmetric(TreeNode root){
+    return root==null?true:checkNode(root.left,root.right);
+  }
+  public boolean checkNode(TreeNode L,TreeNode R){
+    if(L==null&&R==null) return true;
+    if(L==null||R==null||L.val!=R.val) return false;
+    return checkNode(L.left,R.right)&&checkNode(L.right,R.left);
+    
+  }
+}
+```
+
+

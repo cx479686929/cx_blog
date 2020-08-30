@@ -15,12 +15,12 @@ module.exports = {
         src: 'img/logo.svg',
       },
       items: [
-        // {
-        //   to: 'docs/',
-        //   activeBasePath: 'docs',
-        //   label: 'Docs',
-        //   position: 'left',
-        // },
+        {
+          to: 'docs/',
+          activeBasePath: 'docs',
+          label: 'Docs',
+          position: 'left',
+        },
         {to: 'blog', label: 'Blog', position: 'left'},
         {
           href: 'https://blog.csdn.net/qq_43176366',
@@ -32,19 +32,19 @@ module.exports = {
     footer: {
       style: 'dark',
       links: [
-        // {
-        //   title: 'Docs',
-        //   items: [
-        //     {
-        //       label: 'Style Guide',
-        //       to: 'docs/',
-        //     },
-        //     {
-        //       label: 'Second Doc',
-        //       to: 'docs/doc2/',
-        //     },
-        //   ],
-        // },
+        {
+          title: 'Docs',
+          items: [
+            {
+              label: 'Style Guide',
+              to: 'docs/',
+            },
+            {
+              label: 'Second Doc',
+              to: 'docs/doc2/',
+            },
+          ],
+        },
         {
           title: 'Community',
           items: [
@@ -89,8 +89,8 @@ module.exports = {
           homePageId: 'doc1',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+          // editUrl:
+          //   'https://github.com/facebook/docusaurus/edit/master/website/',
         },
         blog: {
           showReadingTime: true,

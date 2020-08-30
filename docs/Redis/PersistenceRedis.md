@@ -1,5 +1,5 @@
 ---
-id: Redis持久化
+id: PersistenceRedis
 title: Redis-持久化
 author: 一代风流～
 author_title: To be the weirdest person
@@ -24,6 +24,8 @@ Redis提供了两种持久化方式，<Highlight color="#25c2a0">RDB</Highlight>
 
 RDB就是在不同的时间点，将Redis存储的数据生成快照并存储到磁盘等介质上
 <!--truncate-->
+
+
 
 
 
