@@ -1,6 +1,6 @@
 module.exports = {
   someSidebar: {
-    JAVA: ['doc1', 'doc2', 'doc3'],
+    JAVA: ['java/java-keyword'],
     计算机网络: ['ComputerNetwork/UDPTCP'],
     计算机基础:[],
     数据结构:[],
